@@ -5,6 +5,7 @@ import { Form } from "@/components/ui/form";
 import { getSafeRuleInputTypes } from "@/lib/utils";
 import { Rules } from "@/rules/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTransition } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { z } from "zod";
 import ConfirmComponent from "./confirm-component";
@@ -31,11 +32,17 @@ const { Stepper, useStepper } = defineStepper(
     id: "confirm",
     title: "Confirm",
     schema: z.object({}),
-    Component: ({ isPending }: { isPending: boolean }) => <ConfirmComponent />,
+    Component: () => <ConfirmComponent />,
   }
 );
 
-export function AddRule({ ruleName }: { ruleName: Rules }) {
+export function AddRule({
+  ruleName,
+  insertRule,
+}: {
+  ruleName: Rules;
+  insertRule: (_values: TAddRuleForm) => Promise<void>;
+}) {
   const form = useForm<TAddRuleForm>({
     mode: "onTouched",
     resolver: zodResolver(addRuleFormSchema),
@@ -48,23 +55,34 @@ export function AddRule({ ruleName }: { ruleName: Rules }) {
     },
   });
 
-  const companyName = form.watch("company");
-
   return (
     <Stepper.Provider variant="vertical" tracking>
       <FormProvider {...form}>
-        <AddRuleForm ruleName={ruleName} />
+        <AddRuleForm ruleName={ruleName} insertRule={insertRule} />
       </FormProvider>
     </Stepper.Provider>
   );
 }
 
-const AddRuleForm = ({ ruleName }: { ruleName: Rules }) => {
+const AddRuleForm = ({
+  ruleName,
+  insertRule,
+}: {
+  ruleName: Rules;
+  insertRule: (_values: TAddRuleForm) => Promise<void>;
+}) => {
   const methods = useStepper();
   const form = useFormContext<TAddRuleForm>();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isPending, startTransition] = useTransition();
+
   const onSubmit = async (values: TAddRuleForm) => {
     console.log(values);
+    startTransition(async () => {
+      await insertRule(values);
+      form.reset();
+    });
   };
 
   return (
@@ -85,10 +103,7 @@ const AddRuleForm = ({ ruleName }: { ruleName: Rules }) => {
               <Stepper.Title>{step.title}</Stepper.Title>
               {methods.when(step.id, () => (
                 <Stepper.Panel>
-                  <methods.current.Component
-                    ruleName={ruleName}
-                    isPending={false}
-                  />
+                  <methods.current.Component ruleName={ruleName} />
                 </Stepper.Panel>
               ))}
             </Stepper.Step>
@@ -105,7 +120,9 @@ const AddRuleForm = ({ ruleName }: { ruleName: Rules }) => {
             </Button>
           )}
           {methods.isLast ? (
-            <Button type="submit">{false ? "Loading" : "Submit"}</Button>
+            <Button type="button" onClick={form.handleSubmit(onSubmit)}>
+              {false ? "Loading" : "Submit"}
+            </Button>
           ) : (
             <Button
               type="button"

@@ -16,7 +16,11 @@ export const ruleInputSchema = z.object({
 
 export const inputValueSchema = z.discriminatedUnion("type", [
   z.object({ name: z.string(), type: z.literal("string"), value: z.string() }),
-  z.object({ name: z.string(), type: z.literal("number"), value: z.number() }),
+  z.object({
+    name: z.string(),
+    type: z.literal("number"),
+    value: z.coerce.number(),
+  }),
   z.object({
     name: z.string(),
     type: z.literal("boolean"),
@@ -24,7 +28,9 @@ export const inputValueSchema = z.discriminatedUnion("type", [
   }),
 ]);
 
-export const ruleDefinition = z.object({
+export const ruleInstanceInputs = z.array(inputValueSchema);
+
+export const ruleDefinitionSchema = z.object({
   ruleName: z.string(),
   type: z.union([z.literal("credit"), z.literal("vehicle")]),
   inputs: z.array(ruleInputSchema),
@@ -33,7 +39,7 @@ export const ruleDefinition = z.object({
 export const ruleConfigurationSchema = z.object({
   ruleName: z.union([
     z.literal("min-credit-score"),
-    z.literal("max-vehicle-age"),
+    z.literal("max-engine-size"),
   ]),
   products: z.array(productSchema),
   inputValues: z.array(inputValueSchema),
@@ -46,22 +52,40 @@ export const minCreditScoreInputs = z.array(
   z.object({
     name: z.literal("min-score"),
     type: z.literal("number"),
-    value: z.number(),
+    value: z.coerce.number(),
   })
 );
 
-export const maxVehicleAgeInputs = z.array(
+export const ruleInstanceInputsV2 = z.array(
+  z.discriminatedUnion("name", [
+    z.object({
+      name: z.literal("min-score"),
+      type: z.literal("number"),
+      value: z.number(),
+    }),
+    z.object({
+      name: z.literal("max-engine-size"),
+      type: z.literal("number"),
+      value: z.number(),
+    }),
+  ])
+);
+
+export const maxEngineSizeInputs = z.array(
   z.object({
-    name: z.literal("max-age"),
+    name: z.literal("max-engine-size"),
     type: z.literal("number"),
-    value: z.number(),
+    value: z.coerce.number(),
   })
 );
 
-export const ruleInstanceInputs = z.union([
-  minCreditScoreInputs,
-  maxVehicleAgeInputs,
-]);
+export const genericRuleInstanceInputs = z.array(
+  z.object({
+    name: z.string(),
+    type: z.union([z.literal("string"), z.literal("number")]),
+    value: z.string(),
+  })
+);
 
 export const minCreditScoreRuleSchema = z.object({
   ruleName: z.literal("min-credit-score"),
@@ -70,11 +94,12 @@ export const minCreditScoreRuleSchema = z.object({
   enabled: z.boolean(),
 });
 
-export const maxVehicleAgeRuleSchema = z.object({
-  ruleName: z.literal("max-vehicle-age"),
+export const maxEngineSizeSchema = z.object({
+  ruleName: z.literal("max-engine-size"),
   products: z.array(productSchema),
-  inputValues: maxVehicleAgeInputs,
+  inputValues: maxEngineSizeInputs,
   enabled: z.boolean(),
 });
 
 export const ruleInstances = z.array(ruleConfigurationSchema);
+export const ruleDefinitions = z.array(ruleDefinitionSchema);

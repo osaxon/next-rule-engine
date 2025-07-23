@@ -1,22 +1,25 @@
-import { fetchApplication } from "@/applications";
+import { ApplicationBuilder } from "@/applications/builder";
+import { RuleResultsSummary } from "@/components/rule-result-summary";
 import { RuleEngine } from "@/rules/engine";
-import { fetchRules } from "@/rules/fetchRules";
+import { fetchRuleInstances } from "@/rules/fetchRules";
 
 const engine = new RuleEngine();
 
 export default async function Home() {
-  const rules = await fetchRules();
-  const application = await fetchApplication("id");
+  const rules = await fetchRuleInstances();
+  const appBuilder = new ApplicationBuilder();
 
-  if (!rules || !application) return null;
+  appBuilder.withCreditScore().withEngineSize();
 
-  const results = await engine.SetupRules(rules).RunRules(application);
+  const app = appBuilder.build();
+
+  if (!rules || !app) return null;
+
+  const results = await engine.SetupRules(rules).RunRules(app);
 
   return (
-    <div>
-      <pre>
-        <code>{JSON.stringify(results, null, 2)}</code>
-      </pre>
+    <div className="p-8">
+      <RuleResultsSummary results={results} />
     </div>
   );
 }

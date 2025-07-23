@@ -6,15 +6,15 @@ import {
 } from "@/types";
 
 export interface IRule {
-  shouldRun: (application: Application) => boolean;
-  run: (application: Application) => Promise<RuleResult>;
+  shouldRun: (_application: Application) => boolean;
+  run: (_application: Application) => Promise<RuleResult>;
   ruleName: string;
   products: string[];
   company: string;
   enabled: boolean;
 }
 
-export type RuleFactory = (rule: TRuleConfiguration) => IRule;
+export type RuleFactory = (_rule: TRuleConfiguration) => IRule;
 
 export type RuleResults = {
   total: number;
@@ -27,7 +27,7 @@ export type ProductRuleResult = {
   product: string;
   company: string;
   rule: string;
-  result: "PASS" | "FAIL";
+  result: RuleResult;
 };
 
 export type RuleResult = {
@@ -36,6 +36,6 @@ export type RuleResult = {
   inputValue: RuleInputTypes;
 };
 
-export const rules = ["min-credit-score", "max-vehicle-age"] as const;
+export const rules = ["min-credit-score", "max-engine-size"] as const;
 
 export type Rules = (typeof rules)[number];

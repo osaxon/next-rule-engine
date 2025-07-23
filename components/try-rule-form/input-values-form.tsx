@@ -1,20 +1,22 @@
-import { TRuleConfiguration } from "@/types";
+import { getSafeRuleInputTypes } from "@/lib/utils";
+import { Rules } from "@/rules/types";
 import { useFormContext } from "react-hook-form";
 import { FormDescription } from "../ui/form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Switch } from "../ui/switch";
 import { TryRuleForm } from "./types";
 
-export function InputValuesForm({ rule }: { rule: TRuleConfiguration }) {
+export function InputValuesForm({ ruleName }: { ruleName: Rules }) {
   const {
     register,
     formState: { errors },
   } = useFormContext<TryRuleForm>();
 
+  const inputValues = getSafeRuleInputTypes(ruleName);
+
   return (
     <div className="space-y-4">
-      {rule.inputValues.map((input, index) => (
+      {inputValues.map((input, index) => (
         <div key={input.name} className="space-y-2">
           <FormDescription>
             This the actual value to test the rule with. The value provided here
@@ -24,9 +26,7 @@ export function InputValuesForm({ rule }: { rule: TRuleConfiguration }) {
             Value for {input.name}
           </Label>
 
-          {input.type === "boolean" ? (
-            <Switch {...register(`inputValues.${index}.value`)} />
-          ) : input.type === "number" ? (
+          {input.type === "number" ? (
             <Input
               type="number"
               id={`inputValues.${index}.value`}

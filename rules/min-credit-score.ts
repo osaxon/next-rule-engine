@@ -1,4 +1,4 @@
-import { Application, MinCreditScoreInputs } from "@/types";
+import { Application, TMinCreditScoreInputs } from "@/types";
 import { Rules } from "@/types/constants";
 import { IRule, RuleResult } from "./types";
 import { RuleConfiguration } from "./rule-configuration";
@@ -10,7 +10,7 @@ export class MinCreditScoreRule implements IRule {
   company: string;
   enabled: boolean;
 
-  constructor(config: RuleConfiguration<MinCreditScoreInputs>) {
+  constructor(config: RuleConfiguration<TMinCreditScoreInputs>) {
     const inputValue = config.getInputValue("min-score");
 
     this.minScore = inputValue;

@@ -1,8 +1,8 @@
-import { MaxVehicleAgeInputs, MinCreditScoreInputs } from "@/types";
+import { TMaxEngineSize, TMinCreditScoreInputs } from "@/types";
 import { MinCreditScoreRule } from "./min-credit-score";
-import { MaxVehicleAge } from "./max-vehicle-age";
+import { MaxEngineSize } from "./max-engine-size";
 import {
-  maxVehicleAgeRuleSchema,
+  maxEngineSizeSchema,
   minCreditScoreRuleSchema,
 } from "@/types/schemas/rules";
 import { RuleFactory, Rules } from "./types";
@@ -18,19 +18,19 @@ export const ruleFactoryRegistry: Record<Rules | (string & {}), RuleFactory> = {
     }
 
     return new MinCreditScoreRule(
-      new RuleConfiguration<MinCreditScoreInputs>(parsedRule.data)
+      new RuleConfiguration<TMinCreditScoreInputs>(parsedRule.data)
     );
   },
-  "max-vehicle-age": (rule) => {
-    const parsedRule = maxVehicleAgeRuleSchema.safeParse(rule);
+  "max-engine-size": (rule) => {
+    const parsedRule = maxEngineSizeSchema.safeParse(rule);
 
     if (!parsedRule.success) {
       console.error("error parsing rule");
       throw new Error();
     }
 
-    return new MaxVehicleAge(
-      new RuleConfiguration<MaxVehicleAgeInputs>(parsedRule.data)
+    return new MaxEngineSize(
+      new RuleConfiguration<TMaxEngineSize>(parsedRule.data)
     );
   },
 } as const;

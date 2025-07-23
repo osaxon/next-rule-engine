@@ -1,11 +1,4 @@
-import { TAddRuleForm } from "@/components/add-rule-form/types";
-import { Rules } from "@/rules/types";
-import {
-  MaxVehicleAgeInputs,
-  MinCreditScoreInputs,
-  TRuleConfiguration,
-  TRuleNames,
-} from "@/types";
+import { TMaxEngineSize, TMinCreditScoreInputs, TRuleNames } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -18,12 +11,10 @@ export function getSafeRuleInputTypes(ruleName: TRuleNames) {
     case "min-credit-score":
       return [
         { name: "min-score", type: "number", value: 0 },
-      ] as MinCreditScoreInputs;
-    case "max-vehicle-age":
+      ] as TMinCreditScoreInputs;
+    case "max-engine-size":
       return [
-        { name: "max-age", type: "number", value: 0 },
-      ] as MaxVehicleAgeInputs;
-    default:
-      return [];
+        { name: "max-engine-size", type: "number", value: 0 },
+      ] as TMaxEngineSize;
   }
 }

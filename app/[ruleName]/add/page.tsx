@@ -1,5 +1,6 @@
 import { AddRule } from "@/components/add-rule-form";
 import { Rules } from "@/rules/types";
+import { insertRule } from "@/app/actions/insertRule";
 
 export default async function AddRulePage({
   params,
@@ -8,9 +9,10 @@ export default async function AddRulePage({
 }) {
   const { ruleName } = (await params) as { ruleName: Rules };
 
+
   return (
     <div className="p-8">
-      <AddRule ruleName={ruleName} />
+      <AddRule ruleName={ruleName} insertRule={insertRule} />
     </div>
   );
 }

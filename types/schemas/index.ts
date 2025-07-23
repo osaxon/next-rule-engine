@@ -16,6 +16,7 @@ export const vehicleSchema = z.object({
   vrm: z.string(),
   registrationDate: z.string(),
   value: z.number(),
+  engineSize: z.number(),
 });
 
 export const applicationSchema = z.object({
