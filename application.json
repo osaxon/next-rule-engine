@@ -1,0 +1,17 @@
+{
+    "mainApplicant": {
+        "name": "Jane Doe",
+        "email": "jane.doe@example.com",
+        "creditReport": {
+            "score": 720
+        }
+    },
+    "loanAmount": 15000,
+    "vehicle": {
+        "make": "Toyota",
+        "model": "Corolla",
+        "vrm": "AB12CDE",
+        "registrationDate": "2021-05-15T00:00:00.000Z",
+        "value": 1800
+    }
+}

@@ -1,0 +1,226 @@
+[
+    {
+        "ruleName": "min-credit-score",
+        "products": [
+            {
+                "productName": "Auto Loan",
+                "company": "FinanceCorp"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "min-score",
+                "type": "number",
+                "value": 650
+            }
+        ],
+        "enabled": false
+    },
+    {
+        "ruleName": "min-credit-score",
+        "products": [
+            {
+                "productName": "Auto Loan",
+                "company": "FinanceCorp"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "min-score",
+                "type": "number",
+                "value": 99999
+            }
+        ],
+        "enabled": false
+    },
+    {
+        "ruleName": "min-credit-score",
+        "products": [
+            {
+                "productName": "PCP",
+                "company": "FinanceCorp"
+            },
+            {
+                "productName": "Lease",
+                "company": "FinanceCorp"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "min-score",
+                "type": "number",
+                "value": 120
+            }
+        ],
+        "enabled": true
+    },
+    {
+        "ruleName": "min-credit-score",
+        "products": [
+            {
+                "productName": "Personal Loan",
+                "company": "MoneyBank"
+            },
+            {
+                "productName": "Home Loan",
+                "company": "MoneyBank"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "min-score",
+                "type": "number",
+                "value": 300
+            }
+        ],
+        "enabled": true
+    },
+    {
+        "ruleName": "min-credit-score",
+        "products": [
+            {
+                "productName": "Car Finance",
+                "company": "AutoLenders"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "min-score",
+                "type": "number",
+                "value": 75
+            }
+        ],
+        "enabled": true
+    },
+    {
+        "ruleName": "min-credit-score",
+        "products": [
+            {
+                "productName": "Motorbike Loan",
+                "company": "BikeBank"
+            },
+            {
+                "productName": "Scooter Loan",
+                "company": "BikeBank"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "min-score",
+                "type": "number",
+                "value": 500
+            }
+        ],
+        "enabled": true
+    },
+    {
+        "ruleName": "min-credit-score",
+        "products": [
+            {
+                "productName": "Boat Loan",
+                "company": "MarineFinance"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "min-score",
+                "type": "number",
+                "value": 220
+            }
+        ],
+        "enabled": true
+    },
+    {
+        "ruleName": "min-credit-score",
+        "products": [
+            {
+                "productName": "Campervan Loan",
+                "company": "TravelBank"
+            },
+            {
+                "productName": "RV Loan",
+                "company": "TravelBank"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "min-score",
+                "type": "number",
+                "value": 800
+            }
+        ],
+        "enabled": false
+    },
+    {
+        "ruleName": "min-credit-score",
+        "products": [
+            {
+                "productName": "Student Loan",
+                "company": "EduFinance"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "min-score",
+                "type": "number",
+                "value": 400
+            }
+        ],
+        "enabled": false
+    },
+    {
+        "ruleName": "min-credit-score",
+        "products": [
+            {
+                "productName": "Business Loan",
+                "company": "BizBank"
+            },
+            {
+                "productName": "Startup Loan",
+                "company": "BizBank"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "min-score",
+                "type": "number",
+                "value": 999
+            }
+        ],
+        "enabled": true
+    },
+    {
+        "ruleName": "min-credit-score",
+        "products": [
+            {
+                "productName": "Green Loan",
+                "company": "EcoFinance"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "min-score",
+                "type": "number",
+                "value": 50
+            }
+        ],
+        "enabled": false
+    },
+    {
+        "ruleName": "max-vehicle-age",
+        "products": [
+            {
+                "productName": "Green Loan",
+                "company": "EcoFinance"
+            }
+        ],
+        "inputValues": [
+            {
+                "name": "max-age",
+                "type": "number",
+                "value": 50
+            }
+        ],
+        "enabled": true
+    }
+]
