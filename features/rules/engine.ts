@@ -1,10 +1,12 @@
 import { Application, TRuleConfiguration } from "@/types";
 import { ruleFactoryRegistry } from "./rule-factory";
-import { IRule, ProductRuleResult, RuleResult } from "./types";
+import { IRule, ProductRuleResult, RuleResultSummary } from "./types";
+import { ProductsWithCompany } from "../products/fetchProducts";
 
 export class RuleEngine {
   ruleClasses: IRule[] = [];
   ruleResults: ProductRuleResult[] = [];
+  resultSumary: RuleResultSummary | null = null;
 
   ResetResults() {
     this.ruleResults = [];
@@ -53,13 +55,36 @@ export class RuleEngine {
       }
     }
 
-    return {
+    this.resultSumary = {
       total: this.ruleResults.length,
       passing,
       failing,
       skipped,
       data: this.ruleResults,
     };
+
+    return this.resultSumary;
+  }
+
+  Summary() {
+    return this.resultSumary;
+  }
+
+  ProductOutcomes(products: ProductsWithCompany) {
+    return products.map((product) => {
+      const ruleOutcomes = this.ruleResults
+        .filter((result) => result.product === product.productName)
+        .map((result) => ({
+          ruleName: result.rule,
+          input: result.result.inputValue,
+          ruleConfig: result.result.ruleConfig.value,
+          result: result.result.result,
+        }));
+      return {
+        ...product,
+        ruleOutcomes,
+      };
+    });
   }
 
   async RunRule(ruleConfig: TRuleConfiguration, application: Application) {

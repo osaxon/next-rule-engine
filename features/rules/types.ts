@@ -4,6 +4,7 @@ import {
   RuleInputs,
   RuleInputTypes,
 } from "@/types";
+import { ProductsWithCompany } from "../products/fetchProducts";
 
 export interface IRule {
   shouldRun: (_application: Application) => boolean;
@@ -34,6 +35,22 @@ export type RuleResult = {
   result: "PASS" | "FAIL";
   ruleConfig: RuleInputs;
   inputValue: RuleInputTypes;
+};
+
+export type RuleResultSummary = {
+  total: number;
+  passing: number;
+  failing: number;
+  skipped: number;
+  data: ProductRuleResult[];
+};
+
+export type ProductsWithOutcomes = ProductsWithCompany & {
+  ruleOutcomes: Array<{
+    ruleName: string;
+    input: RuleInputs["value"];
+    ruleConfig: RuleInputs["value"];
+  }>;
 };
 
 export const rules = ["min-credit-score", "max-engine-size"] as const;
