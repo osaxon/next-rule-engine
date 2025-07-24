@@ -1,12 +1,12 @@
 "use client";
 import { runRuleAction } from "@/app/actions/runRule";
-import { ApplicationBuilder } from "@/applications/builder";
 import { defineStepper } from "@/components/stepper";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { ApplicationBuilder } from "@/features/applications/builder";
+import { RuleConfigBuilder } from "@/features/rules/rule-config-builder";
+import { RuleResult, Rules } from "@/features/rules/types";
 import { getSafeRuleInputTypes } from "@/lib/utils";
-import { RuleConfigBuilder } from "@/rules/rule-config-builder";
-import { RuleResult, Rules } from "@/rules/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";

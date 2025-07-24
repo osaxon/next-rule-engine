@@ -18,6 +18,7 @@ export type RuleDefinition = z.infer<typeof ruleDefinitionSchema>;
 export type TRuleConfiguration = z.infer<typeof ruleConfigurationSchema>;
 
 export type InputValues = z.infer<typeof inputValueSchema>;
+export type InputValueTypes = InputValues["type"];
 
 export type Product = z.infer<typeof productSchema>;
 

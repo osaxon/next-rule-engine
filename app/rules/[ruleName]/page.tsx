@@ -1,5 +1,5 @@
 import { TryRule } from "@/components/try-rule-form/try-rule-form";
-import { Rules } from "@/rules/types";
+import { Rules } from "@/features/rules/types";
 
 export default async function RulePage({
   params,

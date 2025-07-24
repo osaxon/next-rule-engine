@@ -1,5 +1,5 @@
+import { Rules } from "@/features/rules/types";
 import { getSafeRuleInputTypes } from "@/lib/utils";
-import { Rules } from "@/rules/types";
 import { useFormContext } from "react-hook-form";
 import { FormDescription } from "../ui/form";
 import { Input } from "../ui/input";

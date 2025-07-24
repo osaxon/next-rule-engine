@@ -5,8 +5,6 @@ import { Rules } from "./types";
 import { db } from "@/db";
 
 export async function fetchRuleInstances() {
-  // const json = await import("../rule-instances.json").then((d) => d.default);
-
   const data = await db.query.ruleInstances.findMany();
 
   const rules = ruleInstances.safeParse(data);

@@ -1,5 +1,5 @@
+import { Rules } from "@/features/rules/types";
 import { cn } from "@/lib/utils";
-import { Rules } from "@/rules/types";
 import { ruleNameUnion } from "@/types/schemas/rules";
 import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
 import { CommandItem, CommandList } from "cmdk";

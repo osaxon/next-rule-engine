@@ -1,6 +1,6 @@
 "use server";
 
-import { RuleEngine } from "@/rules/engine";
+import { RuleEngine } from "@/features/rules/engine";
 import { Application, TRuleConfiguration } from "@/types";
 
 export async function runRuleAction(

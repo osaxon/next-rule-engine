@@ -14,6 +14,8 @@ export const ruleInputSchema = z.object({
   ]),
 });
 
+export const ruleDefinitionInputs = z.array(ruleInputSchema);
+
 export const inputValueSchema = z.discriminatedUnion("type", [
   z.object({ name: z.string(), type: z.literal("string"), value: z.string() }),
   z.object({

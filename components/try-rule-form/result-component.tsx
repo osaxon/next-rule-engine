@@ -1,4 +1,4 @@
-import { RuleResult } from "@/rules/types";
+import { RuleResult } from "@/features/rules/types";
 import { Spinner } from "../ui/spinner";
 
 export function RuleResultComponent({

@@ -2,8 +2,8 @@
 import { defineStepper } from "@/components/stepper";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { Rules } from "@/features/rules/types";
 import { getSafeRuleInputTypes } from "@/lib/utils";
-import { Rules } from "@/rules/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";

@@ -3,8 +3,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Rules } from "@/features/rules/types";
 import { getSafeRuleInputTypes } from "@/lib/utils";
-import { Rules } from "@/rules/types";
 import { InfoIcon, PencilIcon } from "lucide-react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
