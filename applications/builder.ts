@@ -31,19 +31,10 @@ export class ApplicationBuilder {
 
   static config: ApplicationBuilderConfig = {
     "min-score": (app, value) => {
-      if (typeof value === "number" && !Number(value)) {
-        app.mainApplicant.creditReport.score = value;
-      } else {
-        throw new Error("invalid type");
-      }
+      app.mainApplicant.creditReport.score = value;
     },
     "max-engine-size": (app, val) => {
-      console.log(val, typeof val);
-      if (typeof val === "number") {
-        app.vehicle.engineSize = val;
-      } else {
-        throw new Error("invalid type");
-      }
+      app.vehicle.engineSize = val;
     },
   };
 
