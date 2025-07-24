@@ -1,27 +1,27 @@
-import { TRuleConfiguration } from "@/types";
+import { getSafeRuleInputTypes } from "@/lib/utils";
+import { Rules } from "@/rules/types";
 import { useFormContext } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Switch } from "../ui/switch";
 import { TryRuleForm } from "./types";
 
-export default function RuleConfigForm({ rule }: { rule: TRuleConfiguration }) {
+export default function RuleConfigForm({ ruleName }: { ruleName: Rules }) {
   const {
     register,
     formState: { errors },
   } = useFormContext<TryRuleForm>();
 
+  const inputValues = getSafeRuleInputTypes(ruleName);
+
   return (
     <div className="space-y-4">
-      {rule.inputValues.map((input, index) => (
+      {inputValues.map((input, index) => (
         <div key={input.name} className="space-y-2">
           <Label htmlFor={`ruleConfig.${index}.value`}>
             Paramter name: {input.name}
           </Label>
 
-          {input.type === "boolean" ? (
-            <Switch {...register(`ruleConfig.${index}.value`)} />
-          ) : input.type === "number" ? (
+          {input.type === "number" ? (
             <Input
               type="number"
               id={`ruleConfig.${index}.value`}

@@ -1,0 +1,22 @@
+[
+  {
+    "ruleName": "min-credit-score",
+    "type": "credit",
+    "inputs": [
+      {
+        "name": "min-score",
+        "type": "number"
+      }
+    ]
+  },
+  {
+    "ruleName": "max-engine-size",
+    "type": "vehicle",
+    "inputs": [
+      {
+        "name": "max-engine-size",
+        "type": "number"
+      }
+    ]
+  }
+]

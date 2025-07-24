@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { getSafeRuleInputTypes } from "@/lib/utils";
 import { RuleConfigBuilder } from "@/rules/rule-config-builder";
-import { RuleResult } from "@/rules/types";
-import { TRuleConfiguration } from "@/types";
+import { RuleResult, Rules } from "@/rules/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
@@ -22,16 +21,16 @@ const { Stepper, useStepper } = defineStepper(
     id: "rule-input-config",
     title: "Rule config",
     schema: tryRuleFormSchema,
-    Component: ({ rule }: { rule: TRuleConfiguration }) => (
-      <RuleConfigForm rule={rule} />
+    Component: ({ ruleName }: { ruleName: Rules }) => (
+      <RuleConfigForm ruleName={ruleName} />
     ),
   },
   {
     id: "rule-input-values",
     title: "Input values",
     schema: tryRuleFormSchema,
-    Component: ({ rule }: { rule: TRuleConfiguration }) => (
-      <InputValuesForm rule={rule} />
+    Component: ({ ruleName }: { ruleName: Rules }) => (
+      <InputValuesForm ruleName={ruleName} />
     ),
   },
   {
@@ -48,8 +47,8 @@ const { Stepper, useStepper } = defineStepper(
   }
 );
 
-export function TryRule({ rule }: { rule: TRuleConfiguration }) {
-  const safeDefaults = getSafeRuleInputTypes(rule);
+export function TryRule({ ruleName }: { ruleName: Rules }) {
+  const safeDefaults = getSafeRuleInputTypes(ruleName);
 
   const form = useForm<TryRuleForm>({
     mode: "onTouched",
@@ -63,13 +62,13 @@ export function TryRule({ rule }: { rule: TRuleConfiguration }) {
   return (
     <Stepper.Provider variant="vertical" tracking>
       <FormProvider {...form}>
-        <TryRuleForm rule={rule} />
+        <TryRuleForm ruleName={ruleName} />
       </FormProvider>
     </Stepper.Provider>
   );
 }
 
-const TryRuleForm = ({ rule }: { rule: TRuleConfiguration }) => {
+const TryRuleForm = ({ ruleName }: { ruleName: Rules }) => {
   const methods = useStepper();
   const form = useFormContext<TryRuleForm>();
   const [isPending, startTransition] = useTransition();
@@ -82,7 +81,7 @@ const TryRuleForm = ({ rule }: { rule: TRuleConfiguration }) => {
     const ruleConfigBuilder = new RuleConfigBuilder();
 
     const ruleConfig = ruleConfigBuilder
-      .setRule(rule.ruleName)
+      .setRule(ruleName)
       .setInputValues(values.ruleConfig)
       .build();
 
@@ -116,7 +115,7 @@ const TryRuleForm = ({ rule }: { rule: TRuleConfiguration }) => {
               {methods.when(step.id, () => (
                 <Stepper.Panel>
                   <methods.current.Component
-                    rule={rule}
+                    ruleName={ruleName}
                     result={result}
                     isPending={isPending}
                   />

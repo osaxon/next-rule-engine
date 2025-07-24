@@ -1,20 +1,41 @@
 "use server";
 
-import { ruleInstances } from "@/types/schemas/rules";
+import { ruleDefinitions, ruleInstances } from "@/types/schemas/rules";
 import { Rules } from "./types";
+import { db } from "@/db";
 
-export async function fetchRules() {
-  const json = await import("../rule-instances.json").then((d) => d.default);
+export async function fetchRuleInstances() {
+  // const json = await import("../rule-instances.json").then((d) => d.default);
 
-  const rules = ruleInstances.safeParse(json);
+  const data = await db.query.ruleInstances.findMany();
 
-  if (!rules.success) return null;
+  const rules = ruleInstances.safeParse(data);
+
+  if (!rules.success) {
+    console.error(rules.error);
+    return null;
+  }
+
+  return rules.data;
+}
+
+export async function fetchRuleDefinitions() {
+  // const json = await import("../rule-instances.json").then((d) => d.default);
+
+  const data = await db.query.ruleDefinitions.findMany();
+
+  const rules = ruleDefinitions.safeParse(data);
+
+  if (!rules.success) {
+    console.error(rules.error);
+    return null;
+  }
 
   return rules.data;
 }
 
 export async function fetchSingleRule(name: Rules) {
-  const allRules = await fetchRules();
+  const allRules = await fetchRuleDefinitions();
 
   if (!allRules) return null;
 

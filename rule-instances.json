@@ -11,7 +11,7 @@
             {
                 "name": "min-score",
                 "type": "number",
-                "value": 650
+                "value": "650"
             }
         ],
         "enabled": false

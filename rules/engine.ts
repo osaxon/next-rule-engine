@@ -1,13 +1,13 @@
 import { Application, TRuleConfiguration } from "@/types";
 import { ruleFactoryRegistry } from "./rule-factory";
-import { IRule, ProductRuleResult } from "./types";
+import { IRule, ProductRuleResult, RuleResult } from "./types";
 
 export class RuleEngine {
   ruleClasses: IRule[] = [];
-  productRuleResult: ProductRuleResult[] = [];
+  ruleResults: ProductRuleResult[] = [];
 
   ResetResults() {
-    this.productRuleResult = [];
+    this.ruleResults = [];
   }
 
   SetupRules(rules: TRuleConfiguration | TRuleConfiguration[]) {
@@ -42,23 +42,23 @@ export class RuleEngine {
       const result = await rule.run(application);
 
       for (const product of rule.products) {
-        this.productRuleResult.push({
-          product,
+        this.ruleResults.push({
           company: rule.company,
+          product,
+          result,
           rule: rule.ruleName,
-          result: result ? "PASS" : "FAIL",
         });
-        if (result) passing++;
+        if (result.result === "PASS") passing++;
         else failing++;
       }
     }
 
     return {
-      total: this.productRuleResult.length,
+      total: this.ruleResults.length,
       passing,
       failing,
       skipped,
-      data: this.productRuleResult,
+      data: this.ruleResults,
     };
   }
 
