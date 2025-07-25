@@ -1,3 +1,4 @@
+import { AppContainer } from "@/components/app-container";
 import { RuleResultsSummary } from "@/components/rule-result-summary";
 import { ApplicationBuilder } from "@/features/applications/builder";
 import { RuleEngine } from "@/features/rules/engine";
@@ -18,8 +19,10 @@ export default async function Home() {
   const results = await engine.SetupRules(rules).RunRules(app);
 
   return (
-    <div className="p-8 ">
+    <AppContainer>
       <RuleResultsSummary results={results} />
-    </div>
+    </AppContainer>
   );
 }
+
+

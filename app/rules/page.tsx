@@ -1,3 +1,4 @@
+import { AppContainer } from "@/components/app-container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { fetchRuleDefinitions } from "@/features/rules/fetchRules";
 import { DataTable } from "../../components/data-table";
@@ -9,7 +10,7 @@ export default async function AllRulesPage() {
   if (!ruleDefs) return null;
 
   return (
-    <div className="p-8">
+    <AppContainer>
       <Card>
         <CardHeader>
           <CardTitle>Rule Definitions</CardTitle>
@@ -18,6 +19,6 @@ export default async function AllRulesPage() {
           <DataTable columns={columns} data={ruleDefs} />
         </CardContent>
       </Card>
-    </div>
+    </AppContainer>
   );
 }

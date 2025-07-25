@@ -1,3 +1,5 @@
+import { AppContainer } from "@/components/app-container";
+import { ApplicationSummaryCard } from "@/components/application-summary-card";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ApplicationBuilder } from "@/features/applications/builder";
@@ -15,46 +17,8 @@ export default async function ProductsPage() {
   if (!productRuleOutcomes) return <div>No data</div>;
 
   return (
-    <div className="p-8 space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Application Summary</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <div className="font-semibold">Applicant</div>
-              <div>
-                {app.mainApplicant.name} ({app.mainApplicant.email})
-              </div>
-              <div>
-                Credit Score:{" "}
-                <span className="font-mono">
-                  {app.mainApplicant.creditReport.score}
-                </span>
-              </div>
-            </div>
-            <div>
-              <div className="font-semibold">Vehicle</div>
-              <div>
-                {app.vehicle.make} {app.vehicle.model}
-              </div>
-              <div>
-                Engine Size:{" "}
-                <span className="font-mono">{app.vehicle.engineSize}</span>
-              </div>
-              <div>
-                Value: <span className="font-mono">{app.vehicle.value}</span>
-              </div>
-            </div>
-            <div>
-              <div className="font-semibold">Loan Amount</div>
-              <div className="font-mono">{app.loanAmount}</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
+    <AppContainer>
+      <ApplicationSummaryCard app={app} />
       <div className="space-y-3">
         <h2 className="font-bold text-2xl">Products</h2>
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -116,6 +80,6 @@ export default async function ProductsPage() {
           ))}
         </div>
       </div>
-    </div>
+    </AppContainer>
   );
 }

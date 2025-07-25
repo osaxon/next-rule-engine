@@ -7,7 +7,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Home, Settings, Sigma, User, type LucideIcon } from "lucide-react";
+import {
+  Box,
+  Home,
+  Settings,
+  Sigma,
+  User,
+  type LucideIcon,
+} from "lucide-react";
 import Link from "next/link";
 
 // Menu items.
@@ -21,6 +28,11 @@ const items: Array<{ title: string; url: string; icon: LucideIcon }> = [
     title: "Companies",
     url: "/companies",
     icon: User,
+  },
+  {
+    title: "Products",
+    url: "/products",
+    icon: Box,
   },
   {
     title: "Rules",

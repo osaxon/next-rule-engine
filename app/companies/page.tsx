@@ -3,12 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { fetchCompanies } from "@/features/companies/fetchCompanies";
 import { columns } from "@/features/products/columns";
 import { fetchProducts } from "@/features/products/fetchProducts";
+import { AppContainer } from "../../components/app-container";
 
 export default async function CompaniesPage() {
   const companies = await fetchCompanies();
   const products = await fetchProducts();
   return (
-    <div className="p-8 space-y-6">
+    <AppContainer>
       <Card>
         <CardContent>
           {companies.map((comp) => (
@@ -24,6 +25,6 @@ export default async function CompaniesPage() {
           <DataTable columns={columns} data={products} />
         </CardContent>
       </Card>
-    </div>
+    </AppContainer>
   );
 }
