@@ -1,5 +1,5 @@
 import { TRuleInputs, TRuleConfiguration } from "@/types";
-import { Rules } from "./types";
+import { TRuleNames } from "./types";
 
 export class RuleConfigBuilder {
   private rule;
@@ -17,7 +17,7 @@ export class RuleConfigBuilder {
     };
   }
 
-  setRule(ruleName: Rules) {
+  setRule(ruleName: TRuleNames) {
     this.rule.ruleName = ruleName;
     return this;
   }

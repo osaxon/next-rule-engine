@@ -1,5 +1,4 @@
 import { Application, InputValueType, RuleInputKeys } from "@/types";
-import { add } from "date-fns";
 
 type ApplicationBuilderConfig = {
   [K in RuleInputKeys]: (_app: Application, _value: InputValueType<K>) => void;
@@ -29,17 +28,20 @@ export class ApplicationBuilder {
     return this;
   }
 
-  static config: ApplicationBuilderConfig = {
+  static setters: ApplicationBuilderConfig = {
     "min-score": (app, value) => {
       app.mainApplicant.creditReport.score = value;
     },
     "max-engine-size": (app, val) => {
       app.vehicle.engineSize = val;
     },
+    "must-be-homeowner": (app, val) => {
+      app.mainApplicant.homeowner = val;
+    },
   };
 
   setValue<K extends RuleInputKeys>(name: K, value: InputValueType<K>) {
-    const setter = ApplicationBuilder.config[name];
+    const setter = ApplicationBuilder.setters[name];
     if (setter) setter(this.app, value);
   }
 

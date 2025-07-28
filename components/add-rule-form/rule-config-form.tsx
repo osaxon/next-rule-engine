@@ -3,7 +3,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Rules } from "@/features/rules/types";
+import { TRuleNames } from "@/features/rules/types";
 import { getSafeRuleInputTypes } from "@/lib/utils";
 import { InfoIcon, PencilIcon } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +12,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { TAddRuleForm } from "./types";
 
-export default function RuleConfigForm({ ruleName }: { ruleName: Rules }) {
+export default function RuleConfigForm({ ruleName }: { ruleName: TRuleNames }) {
   const {
     register,
     formState: { errors },

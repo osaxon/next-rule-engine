@@ -1,8 +1,8 @@
 "use server";
 
 import { ruleDefinitions, ruleInstances } from "@/types/schemas/rules";
-import { Rules } from "./types";
 import { db } from "@/db";
+import { TRuleNames } from "./types";
 
 export async function fetchRuleInstances() {
   const data = await db.query.ruleInstances.findMany();
@@ -18,8 +18,6 @@ export async function fetchRuleInstances() {
 }
 
 export async function fetchRuleDefinitions() {
-  // const json = await import("../rule-instances.json").then((d) => d.default);
-
   const data = await db.query.ruleDefinitions.findMany();
 
   const rules = ruleDefinitions.safeParse(data);
@@ -32,7 +30,7 @@ export async function fetchRuleDefinitions() {
   return rules.data;
 }
 
-export async function fetchSingleRule(name: Rules) {
+export async function fetchSingleRule(name: TRuleNames) {
   const allRules = await fetchRuleDefinitions();
 
   if (!allRules) return null;

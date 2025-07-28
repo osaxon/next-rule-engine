@@ -2,7 +2,7 @@
 import { defineStepper } from "@/components/stepper";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { Rules } from "@/features/rules/types";
+import { TRuleNames } from "@/features/rules/types";
 import { getSafeRuleInputTypes } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";
@@ -18,7 +18,7 @@ const { Stepper, useStepper } = defineStepper(
     id: "rule-input-config",
     title: "Rule config",
     schema: addRuleFormSchema,
-    Component: ({ ruleName }: { ruleName: Rules }) => (
+    Component: ({ ruleName }: { ruleName: TRuleNames }) => (
       <RuleConfigForm ruleName={ruleName} />
     ),
   },
@@ -40,7 +40,7 @@ export function AddRule({
   ruleName,
   insertRule,
 }: {
-  ruleName: Rules;
+  ruleName: TRuleNames;
   insertRule: (_values: TAddRuleForm) => Promise<void>;
 }) {
   const form = useForm<TAddRuleForm>({
@@ -68,7 +68,7 @@ const AddRuleForm = ({
   ruleName,
   insertRule,
 }: {
-  ruleName: Rules;
+  ruleName: TRuleNames;
   insertRule: (_values: TAddRuleForm) => Promise<void>;
 }) => {
   const methods = useStepper();

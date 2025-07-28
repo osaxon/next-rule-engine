@@ -1,4 +1,4 @@
-import { Rules } from "@/features/rules/types";
+import { TRuleNames } from "@/features/rules/types";
 import { cn } from "@/lib/utils";
 import { ruleNameUnion } from "@/types/schemas/rules";
 import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
@@ -24,7 +24,7 @@ export function RuleDefinitionForm() {
 
   console.log(ruleNameUnion.options.map((r) => r.value));
 
-  const handleSelect = (value: Rules) => {
+  const handleSelect = (value: TRuleNames) => {
     form.setValue("ruleName", value);
     setOpen(false);
   };
