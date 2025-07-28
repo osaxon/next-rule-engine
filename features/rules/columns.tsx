@@ -12,7 +12,7 @@ export const columns: ColumnDef<RuleDefinition>[] = [
     header: "Rule name",
     cell: ({ row }) => {
       const ruleName = row.getValue("ruleName") as string;
-      return <Link href={`/rules/${ruleName}`}>{ruleName}</Link>;
+      return <Link href={`/rules/${ruleName}/add`}>{ruleName}</Link>;
     },
   },
   {

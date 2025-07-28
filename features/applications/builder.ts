@@ -13,6 +13,7 @@ export class ApplicationBuilder {
         name: "Test User",
         email: "test@example.com",
         creditReport: { score: 0 },
+        homeowner: true,
       },
       loanAmount: 10000,
       vehicle: {

@@ -20,6 +20,12 @@ export function ApplicationSummaryCard({ app }: { app: Application }) {
                 {app.mainApplicant.creditReport.score}
               </span>
             </div>
+            <div>
+              Homeowner:{" "}
+              <span className="font-mono">
+                {JSON.stringify(app.mainApplicant.homeowner)}
+              </span>
+            </div>
           </div>
           <div>
             <div className="font-semibold">Vehicle</div>

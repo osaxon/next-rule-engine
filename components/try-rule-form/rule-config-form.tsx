@@ -35,7 +35,7 @@ export default function RuleConfigForm({ ruleName }: { ruleName: TRuleNames }) {
               <Switch
                 id={`inputValues.${index}.value`}
                 checked={undefined}
-                {...register(`inputValues.${index}.value`, {
+                {...register(`ruleConfig.${index}.value`, {
                   setValueAs: (v) => Boolean(v === true || v === "true"),
                 })}
               />

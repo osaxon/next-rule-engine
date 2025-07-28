@@ -3,6 +3,7 @@ import { MaxEngineSize } from "./max-engine-size/rule-class";
 
 import { IRule, TRuleNames } from "./types";
 import { TRuleConfiguration } from "@/types";
+import { MustBeHomeowner } from "./must-be-homeowner/rule-class";
 
 export class RuleFactoryClass {
   ruleClass: IRule | null = null;
@@ -18,6 +19,8 @@ export class RuleFactoryClass {
         return new MinCreditScoreRule(this.ruleConfig);
       case "max-engine-size":
         return new MaxEngineSize(this.ruleConfig);
+      case "must-be-homeowner":
+        return new MustBeHomeowner(this.ruleConfig);
       default:
         return null;
     }

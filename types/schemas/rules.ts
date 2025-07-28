@@ -27,7 +27,7 @@ export const inputValueSchema = z.discriminatedUnion("type", [
   z.object({
     name: z.string(),
     type: z.literal("boolean"),
-    value: z.boolean(),
+    value: z.coerce.boolean(),
   }),
 ]);
 

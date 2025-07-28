@@ -84,6 +84,7 @@ export class RuleEngine {
   }
 
   ProductOutcomes(products: ProductsWithCompany) {
+    console.log(this.ruleResults);
     return products.map((product) => {
       const ruleOutcomes = this.ruleResults
         .filter((result) => result.product === product.productName)

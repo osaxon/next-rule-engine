@@ -2,9 +2,11 @@
 import { defineStepper } from "@/components/stepper";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { ProductsWithCompany } from "@/features/products/fetchProducts";
 import { TRuleNames } from "@/features/rules/types";
 import { getSafeRuleInputTypes } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { z } from "zod";
@@ -26,7 +28,9 @@ const { Stepper, useStepper } = defineStepper(
     id: "product-relations",
     title: "Product relations",
     schema: addRuleFormSchema,
-    Component: ProductsForm,
+    Component: ({ products }: { products: ProductsWithCompany }) => (
+      <ProductsForm products={products} />
+    ),
   },
   {
     id: "confirm",
@@ -39,9 +43,11 @@ const { Stepper, useStepper } = defineStepper(
 export function AddRule({
   ruleName,
   insertRule,
+  products,
 }: {
   ruleName: TRuleNames;
   insertRule: (_values: TAddRuleForm) => Promise<void>;
+  products: ProductsWithCompany;
 }) {
   const form = useForm<TAddRuleForm>({
     mode: "onTouched",
@@ -58,7 +64,11 @@ export function AddRule({
   return (
     <Stepper.Provider variant="vertical" tracking>
       <FormProvider {...form}>
-        <AddRuleForm ruleName={ruleName} insertRule={insertRule} />
+        <AddRuleForm
+          ruleName={ruleName}
+          insertRule={insertRule}
+          products={products}
+        />
       </FormProvider>
     </Stepper.Provider>
   );
@@ -67,12 +77,15 @@ export function AddRule({
 const AddRuleForm = ({
   ruleName,
   insertRule,
+  products,
 }: {
   ruleName: TRuleNames;
   insertRule: (_values: TAddRuleForm) => Promise<void>;
+  products: ProductsWithCompany;
 }) => {
   const methods = useStepper();
   const form = useFormContext<TAddRuleForm>();
+  const router = useRouter();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isPending, startTransition] = useTransition();
@@ -82,6 +95,7 @@ const AddRuleForm = ({
     startTransition(async () => {
       await insertRule(values);
       form.reset();
+      router.push("/products");
     });
   };
 
@@ -103,7 +117,10 @@ const AddRuleForm = ({
               <Stepper.Title>{step.title}</Stepper.Title>
               {methods.when(step.id, () => (
                 <Stepper.Panel>
-                  <methods.current.Component ruleName={ruleName} />
+                  <methods.current.Component
+                    ruleName={ruleName}
+                    products={products}
+                  />
                 </Stepper.Panel>
               ))}
             </Stepper.Step>

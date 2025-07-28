@@ -1,20 +1,24 @@
+import { ProductsWithCompany } from "@/features/products/fetchProducts";
 import { useFormContext } from "react-hook-form";
 import { MultiSelect } from "../multi-select";
 import { TAddRuleForm } from "./types";
 
-const productsList = [
-  { value: "Tier 1", label: "Tier 1" },
-  { value: "Tier 2", label: "Tier 2" },
-  { value: "Tier 3", label: "Tier 3" },
-  { value: "Tier 4", label: "Tier 4" },
-  { value: "Tier 5", label: "Tier 5" },
-];
-
-export default function ProductsForm() {
+export default function ProductsForm({
+  products,
+}: {
+  products: ProductsWithCompany;
+}) {
   const form = useFormContext<TAddRuleForm>();
 
   const company = form.getValues("company");
-  const products = form.watch("products");
+  const selectedProducts = form.watch("products");
+
+  const filteredProducts = products
+    .filter((p) => p.company.name === company)
+    .map((product) => ({
+      value: product.productName,
+      label: product.productName,
+    }));
 
   const handleChange = (value: string[]) => {
     const products = value.map((val) => ({ company, productName: val }));
@@ -24,9 +28,9 @@ export default function ProductsForm() {
   return (
     <div className="space-y-4">
       <MultiSelect
-        options={productsList}
+        options={filteredProducts}
         onValueChange={handleChange}
-        defaultValue={products.map((p) => p.productName)}
+        defaultValue={selectedProducts.map((p) => p.productName)}
         placeholder="Select products"
         variant="inverted"
         animation={2}
