@@ -16,7 +16,7 @@ export default async function Home() {
 
   if (!rules || !app) return null;
 
-  const results = await engine.SetupRules(rules).RunRules(app);
+  const results = await engine.InitRules(rules).RunRules(app);
 
   return (
     <AppContainer>
@@ -24,5 +24,3 @@ export default async function Home() {
     </AppContainer>
   );
 }
-
-

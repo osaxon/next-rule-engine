@@ -32,7 +32,7 @@ export async function fetchProductsWithRuleOutcomes(application: Application) {
 
   if (!rules) return null;
 
-  await engine.SetupRules(rules).RunRules(application);
+  await engine.InitRules(rules).RunRules(application);
 
   return engine.ProductOutcomes(products);
 }

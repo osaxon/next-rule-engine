@@ -1,3 +1,4 @@
+"server only";
 import { Application, TRuleConfiguration } from "@/types";
 import { RuleFactoryClass } from "./rule-factory";
 import { IRule, ProductRuleResult, RuleResultSummary } from "./types";
@@ -12,7 +13,7 @@ export class RuleEngine {
     this.ruleResults = [];
   }
 
-  SetupRules(rules: TRuleConfiguration | TRuleConfiguration[]) {
+  InitRules(rules: TRuleConfiguration | TRuleConfiguration[]) {
     const ruleClasses: IRule[] = [];
 
     if (Array.isArray(rules)) {
