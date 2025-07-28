@@ -1,4 +1,7 @@
-import { TMaxEngineSize, TMinCreditScoreInputs, TRuleNames } from "@/types";
+import type { TMaxEngineSizeInputs } from "@/features/rules/max-engine-size/types";
+import type { TMinCreditScoreInputs } from "@/features/rules/min-credit-score/types";
+import { type TRuleNames } from "@/features/rules/types";
+import type { TMustBeHomeownerInputs } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -15,6 +18,10 @@ export function getSafeRuleInputTypes(ruleName: TRuleNames) {
     case "max-engine-size":
       return [
         { name: "max-engine-size", type: "number", value: 0 },
-      ] as TMaxEngineSize;
+      ] as TMaxEngineSizeInputs;
+    case "must-be-homeowner":
+      return [
+        { name: "must-be-homeowner", type: "boolean", value: true },
+      ] as TMustBeHomeownerInputs;
   }
 }

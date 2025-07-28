@@ -1,6 +1,16 @@
 import { InputValues, TRuleConfiguration } from "@/types";
 
-export class RuleConfiguration<TInputValues extends InputValues[]> {
+export interface IRuleInstanceConfig {
+  getCompany: () => string;
+  getProductNames: () => string[];
+  getRuleName: () => string;
+  isEnabled: () => boolean;
+  getRuleConfig: () => InputValues[];
+}
+
+export class RuleInstanceConfig<TInputValues extends InputValues[]>
+  implements IRuleInstanceConfig
+{
   rule: {
     inputValues: TInputValues;
   } & TRuleConfiguration;
@@ -27,4 +37,6 @@ export class RuleConfiguration<TInputValues extends InputValues[]> {
   getCompany = () => this.rule.products[0]?.company ?? "";
   getProductNames = () => this.rule.products.map((p) => p.productName);
   getRuleName = () => this.rule.ruleName;
+  isEnabled = () => this.rule.enabled;
+  getRuleConfig = () => this.rule.inputValues;
 }

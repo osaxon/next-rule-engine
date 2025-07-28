@@ -1,18 +1,25 @@
 import {
   Application,
   TRuleConfiguration,
-  RuleInputs,
+  TRuleInputs,
   RuleInputTypes,
+  TMustBeHomeownerRule,
+  InputValues,
 } from "@/types";
 import { ProductsWithCompany } from "../products/fetchProducts";
+import { TMinCreditScoreRule } from "./min-credit-score/types";
+import { ZodType } from "zod";
+import { RuleInstanceConfig } from "./rule-configuration";
+import { TMaxEngineSizeRule } from "./max-engine-size/types";
 
 export interface IRule {
   shouldRun: (_application: Application) => boolean;
   run: (_application: Application) => Promise<RuleResult>;
   ruleName: string;
+  enabled: boolean;
+  schema: ZodType; // used to parse ruleConfig data from the database into usable input values
   products: string[];
   company: string;
-  enabled: boolean;
 }
 
 export type RuleFactory = (_rule: TRuleConfiguration) => IRule;
@@ -33,8 +40,13 @@ export type ProductRuleResult = {
 
 export type RuleResult = {
   result: "PASS" | "FAIL";
-  ruleConfig: RuleInputs;
+  ruleConfig: TRuleInputs;
   inputValue: RuleInputTypes;
+};
+
+export type RuleOutcome<T extends InputValues[]> = {
+  result: "PASS" | "FAIL";
+  ruleConfig: RuleInstanceConfig<T>;
 };
 
 export type RuleResultSummary = {
@@ -48,11 +60,13 @@ export type RuleResultSummary = {
 export type ProductsWithOutcomes = ProductsWithCompany & {
   ruleOutcomes: Array<{
     ruleName: string;
-    input: RuleInputs["value"];
-    ruleConfig: RuleInputs["value"];
+    input: TRuleInputs["value"];
+    ruleConfig: TRuleInputs["value"];
   }>;
 };
 
-export const rules = ["min-credit-score", "max-engine-size"] as const;
-
-export type Rules = (typeof rules)[number];
+// All rule names
+export type TRuleNames =
+  | TMaxEngineSizeRule["ruleName"]
+  | TMinCreditScoreRule["ruleName"]
+  | TMustBeHomeownerRule["ruleName"];

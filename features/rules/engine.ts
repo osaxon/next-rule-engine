@@ -1,5 +1,5 @@
 import { Application, TRuleConfiguration } from "@/types";
-import { ruleFactoryRegistry } from "./rule-factory";
+import { RuleFactoryClass } from "./rule-factory";
 import { IRule, ProductRuleResult, RuleResultSummary } from "./types";
 import { ProductsWithCompany } from "../products/fetchProducts";
 
@@ -13,15 +13,27 @@ export class RuleEngine {
   }
 
   SetupRules(rules: TRuleConfiguration | TRuleConfiguration[]) {
-    let ruleClasses: IRule[] = [];
+    const ruleClasses: IRule[] = [];
+
     if (Array.isArray(rules)) {
-      ruleClasses = rules.map((r) => {
-        const RuleFactory = ruleFactoryRegistry[r.ruleName];
-        return RuleFactory(r);
-      });
+      for (const rule of rules) {
+        const factoryClass = new RuleFactoryClass(rule);
+
+        const ruleClass = factoryClass.InitRule();
+
+        if (!ruleClass) continue;
+
+        ruleClasses.push(ruleClass);
+      }
     } else {
-      const RuleClass = ruleFactoryRegistry[rules.ruleName];
-      ruleClasses = [RuleClass(rules)];
+      const factoryClass = new RuleFactoryClass(rules);
+
+      const ruleClass = factoryClass.InitRule();
+
+      if (!ruleClass)
+        throw new Error("invalid rule - failed to init rule class");
+
+      ruleClasses.push(ruleClass);
     }
 
     this.ruleClasses = ruleClasses;
@@ -88,12 +100,12 @@ export class RuleEngine {
   }
 
   async RunRule(ruleConfig: TRuleConfiguration, application: Application) {
-    const ruleFactory = ruleFactoryRegistry[ruleConfig.ruleName];
-    if (!ruleFactory) {
+    const ruleFactory = new RuleFactoryClass(ruleConfig);
+
+    const rule = ruleFactory.InitRule();
+    if (!rule) {
       throw new Error(`No factory found for rule: ${ruleConfig.ruleName}`);
     }
-
-    const rule = ruleFactory(ruleConfig);
 
     return await rule.run(application);
   }

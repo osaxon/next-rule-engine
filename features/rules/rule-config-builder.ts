@@ -1,4 +1,4 @@
-import { RuleInputs, TRuleConfiguration } from "@/types";
+import { TRuleInputs, TRuleConfiguration } from "@/types";
 import { Rules } from "./types";
 
 export class RuleConfigBuilder {
@@ -22,7 +22,7 @@ export class RuleConfigBuilder {
     return this;
   }
 
-  setInputValues(inputs: RuleInputs[]) {
+  setInputValues(inputs: TRuleInputs[]) {
     this.rule.inputValues = inputs;
     return this;
   }

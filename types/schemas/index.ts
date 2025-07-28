@@ -8,6 +8,7 @@ export const applicantSchema = z.object({
   name: z.string(),
   email: z.email(),
   creditReport: creditReportSchema,
+  homeowner: z.boolean(),
 });
 
 export const vehicleSchema = z.object({

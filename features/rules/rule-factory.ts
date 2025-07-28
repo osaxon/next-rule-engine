@@ -1,36 +1,25 @@
-import { TMaxEngineSize, TMinCreditScoreInputs } from "@/types";
-import { MinCreditScoreRule } from "./min-credit-score";
-import { MaxEngineSize } from "./max-engine-size";
-import {
-  maxEngineSizeSchema,
-  minCreditScoreRuleSchema,
-} from "@/types/schemas/rules";
-import { RuleFactory, Rules } from "./types";
-import { RuleConfiguration } from "./rule-configuration";
+import { MinCreditScoreRule } from "./min-credit-score/rule-class";
+import { MaxEngineSize } from "./max-engine-size/rule-class";
 
-export const ruleFactoryRegistry: Record<Rules | (string & {}), RuleFactory> = {
-  "min-credit-score": (rule) => {
-    const parsedRule = minCreditScoreRuleSchema.safeParse(rule);
+import { IRule, TRuleNames } from "./types";
+import { TRuleConfiguration } from "@/types";
 
-    if (!parsedRule.success) {
-      console.error("error parsing rule");
-      throw new Error();
+export class RuleFactoryClass {
+  ruleClass: IRule | null = null;
+  ruleConfig: TRuleConfiguration;
+
+  constructor(ruleConfig: TRuleConfiguration) {
+    this.ruleConfig = ruleConfig;
+  }
+
+  InitRule = (): IRule | null => {
+    switch (this.ruleConfig.ruleName) {
+      case "min-credit-score":
+        return new MinCreditScoreRule(this.ruleConfig);
+      case "max-engine-size":
+        return new MaxEngineSize(this.ruleConfig);
+      default:
+        return null;
     }
-
-    return new MinCreditScoreRule(
-      new RuleConfiguration<TMinCreditScoreInputs>(parsedRule.data)
-    );
-  },
-  "max-engine-size": (rule) => {
-    const parsedRule = maxEngineSizeSchema.safeParse(rule);
-
-    if (!parsedRule.success) {
-      console.error("error parsing rule");
-      throw new Error();
-    }
-
-    return new MaxEngineSize(
-      new RuleConfiguration<TMaxEngineSize>(parsedRule.data)
-    );
-  },
-} as const;
+  };
+}

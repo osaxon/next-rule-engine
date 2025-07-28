@@ -1,12 +1,13 @@
-import { Rules } from "@/features/rules/types";
+import { TRuleNames } from "@/features/rules/types";
 import { getSafeRuleInputTypes } from "@/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { FormDescription } from "../ui/form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { Switch } from "../ui/switch";
 import { TryRuleForm } from "./types";
 
-export function InputValuesForm({ ruleName }: { ruleName: Rules }) {
+export function InputValuesForm({ ruleName }: { ruleName: TRuleNames }) {
   const {
     register,
     formState: { errors },
@@ -34,6 +35,19 @@ export function InputValuesForm({ ruleName }: { ruleName: Rules }) {
                 valueAsNumber: true,
               })}
             />
+          ) : input.type === "boolean" ? (
+            <div className="flex items-center gap-2">
+              <Switch
+                id={`inputValues.${index}.value`}
+                checked={undefined}
+                {...register(`inputValues.${index}.value`, {
+                  setValueAs: (v) => Boolean(v === true || v === "true"),
+                })}
+              />
+              <Label htmlFor={`inputValues.${index}.value`} className="ml-2">
+                {`Set ${input.name} to ${input.type}`}
+              </Label>
+            </div>
           ) : (
             <Input
               type="text"

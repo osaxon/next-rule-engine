@@ -1,3 +1,4 @@
+import { products } from "@/db/schema";
 import { z } from "zod";
 
 export const productSchema = z.object({
@@ -35,16 +36,17 @@ export const ruleInstanceInputs = z.array(inputValueSchema);
 export const ruleDefinitionSchema = z.object({
   ruleName: z.string(),
   type: z.union([z.literal("credit"), z.literal("vehicle")]),
-  inputs: z.array(ruleInputSchema),
+  inputs: z.array(ruleInputSchema).nullable(),
 });
 
 export const ruleConfigurationSchema = z.object({
   ruleName: z.union([
     z.literal("min-credit-score"),
     z.literal("max-engine-size"),
+    z.literal("must-be-homeowner"),
   ]),
   products: z.array(productSchema),
-  inputValues: z.array(inputValueSchema),
+  inputValues: ruleInstanceInputs,
   enabled: z.boolean(),
 });
 
@@ -70,15 +72,12 @@ export const ruleInstanceInputsV2 = z.array(
       type: z.literal("number"),
       value: z.number(),
     }),
+    z.object({
+      name: z.literal("must-be-homeowner"),
+      type: z.literal("boolean"),
+      value: z.boolean(),
+    }),
   ])
-);
-
-export const maxEngineSizeInputs = z.array(
-  z.object({
-    name: z.literal("max-engine-size"),
-    type: z.literal("number"),
-    value: z.coerce.number(),
-  })
 );
 
 export const genericRuleInstanceInputs = z.array(
@@ -89,17 +88,18 @@ export const genericRuleInstanceInputs = z.array(
   })
 );
 
-export const minCreditScoreRuleSchema = z.object({
-  ruleName: z.literal("min-credit-score"),
-  products: z.array(productSchema),
-  inputValues: minCreditScoreInputs,
-  enabled: z.boolean(),
-});
+export const mustBeHomeownerInputs = z.array(
+  z.object({
+    name: z.literal("must-be-homeowner"),
+    type: z.literal("boolean"),
+    value: z.boolean(),
+  })
+);
 
-export const maxEngineSizeSchema = z.object({
-  ruleName: z.literal("max-engine-size"),
+export const mustBeHomeownerSchema = z.object({
+  ruleName: z.literal("must-be-homeowner"),
   products: z.array(productSchema),
-  inputValues: maxEngineSizeInputs,
+  inputValues: mustBeHomeownerInputs,
   enabled: z.boolean(),
 });
 

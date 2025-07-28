@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ApplicationBuilder } from "@/features/applications/builder";
 import { RuleConfigBuilder } from "@/features/rules/rule-config-builder";
-import { RuleResult, Rules } from "@/features/rules/types";
+import { RuleResult, TRuleNames } from "@/features/rules/types";
 import { getSafeRuleInputTypes } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
@@ -21,7 +21,7 @@ const { Stepper, useStepper } = defineStepper(
     id: "rule-input-config",
     title: "Rule config",
     schema: tryRuleFormSchema,
-    Component: ({ ruleName }: { ruleName: Rules }) => (
+    Component: ({ ruleName }: { ruleName: TRuleNames }) => (
       <RuleConfigForm ruleName={ruleName} />
     ),
   },
@@ -29,7 +29,7 @@ const { Stepper, useStepper } = defineStepper(
     id: "rule-input-values",
     title: "Input values",
     schema: tryRuleFormSchema,
-    Component: ({ ruleName }: { ruleName: Rules }) => (
+    Component: ({ ruleName }: { ruleName: TRuleNames }) => (
       <InputValuesForm ruleName={ruleName} />
     ),
   },
@@ -47,7 +47,7 @@ const { Stepper, useStepper } = defineStepper(
   }
 );
 
-export function TryRule({ ruleName }: { ruleName: Rules }) {
+export function TryRule({ ruleName }: { ruleName: TRuleNames }) {
   const safeDefaults = getSafeRuleInputTypes(ruleName);
 
   const form = useForm<TryRuleForm>({
@@ -68,7 +68,7 @@ export function TryRule({ ruleName }: { ruleName: Rules }) {
   );
 }
 
-const TryRuleForm = ({ ruleName }: { ruleName: Rules }) => {
+const TryRuleForm = ({ ruleName }: { ruleName: TRuleNames }) => {
   const methods = useStepper();
   const form = useFormContext<TryRuleForm>();
   const [isPending, startTransition] = useTransition();
