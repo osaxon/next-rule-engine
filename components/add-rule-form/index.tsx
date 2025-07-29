@@ -20,9 +20,13 @@ const { Stepper, useStepper } = defineStepper(
     id: "rule-input-config",
     title: "Rule config",
     schema: addRuleFormSchema,
-    Component: ({ ruleName }: { ruleName: TRuleNames }) => (
-      <RuleConfigForm ruleName={ruleName} />
-    ),
+    Component: ({
+      ruleName,
+      products,
+    }: {
+      ruleName: TRuleNames;
+      products: ProductsWithCompany;
+    }) => <RuleConfigForm ruleName={ruleName} products={products} />,
   },
   {
     id: "product-relations",
@@ -95,7 +99,7 @@ const AddRuleForm = ({
     startTransition(async () => {
       await insertRule(values);
       form.reset();
-      router.push("/products");
+      router.push("/product-results");
     });
   };
 

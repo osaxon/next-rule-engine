@@ -1,8 +1,16 @@
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ProductsWithCompany } from "@/features/products/fetchProducts";
 import { TRuleNames } from "@/features/rules/types";
 import { getSafeRuleInputTypes } from "@/lib/utils";
 import { InfoIcon, PencilIcon } from "lucide-react";
@@ -13,7 +21,13 @@ import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { TAddRuleForm } from "./types";
 
-export default function RuleConfigForm({ ruleName }: { ruleName: TRuleNames }) {
+export default function RuleConfigForm({
+  ruleName,
+  products,
+}: {
+  ruleName: TRuleNames;
+  products: ProductsWithCompany;
+}) {
   const {
     register,
     formState: { errors },
@@ -22,6 +36,8 @@ export default function RuleConfigForm({ ruleName }: { ruleName: TRuleNames }) {
   const [enableEditKey, setEnableEditKey] = useState(false);
 
   const inputValues = getSafeRuleInputTypes(ruleName);
+
+  const companies = Array.from(new Set(products.map((p) => p.company.name)));
 
   return (
     <div className="space-y-4">
@@ -46,16 +62,25 @@ export default function RuleConfigForm({ ruleName }: { ruleName: TRuleNames }) {
         </div>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="company">Company</Label>
-        <Input
-          type="text"
-          {...register("company", {
-            onChange: (e) => {
-              const kebabCaseCompany = e.target.value.replaceAll(" ", "-");
-              form.setValue("key", `${kebabCaseCompany}.${ruleName}`);
-            },
-          })}
-        />
+        <Select
+          onValueChange={(val) => {
+            console.log(val);
+            const kebabCaseCompany = val.replaceAll(" ", "-");
+            form.setValue("key", `${kebabCaseCompany}.${ruleName}`);
+            form.setValue("company", val);
+          }}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select a company to apply the rule to" />
+          </SelectTrigger>
+          <SelectContent>
+            {companies.map((c) => (
+              <SelectItem key={c} value={c}>
+                {c}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       <div className="space-y-2 relative">
         <Label className="flex justify-between" htmlFor="key">

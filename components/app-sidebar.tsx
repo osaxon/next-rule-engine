@@ -31,7 +31,7 @@ const items: Array<{ title: string; url: string; icon: LucideIcon }> = [
   },
   {
     title: "Products",
-    url: "/products",
+    url: "/product-results",
     icon: Box,
   },
   {
