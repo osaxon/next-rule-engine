@@ -6,6 +6,8 @@ import { ApplicationBuilder } from "@/features/applications/builder";
 import { fetchProductsWithRuleOutcomes } from "@/features/products/fetchProducts";
 import { cn } from "@/lib/utils";
 
+export const revalidate = 60;
+
 export default async function ProductsPage() {
   const appBuilder = new ApplicationBuilder();
   appBuilder.withCreditScore().withEngineSize();
